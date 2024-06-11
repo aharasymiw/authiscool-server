@@ -1,0 +1,53 @@
+{
+  "name": "authiscool-server",
+  "version": "1.0.0",
+  "description": "Comparing different methods of auth",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/server.js",
+    "preserver": "npx tsc",
+    "server": "node --watch dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aharasymiw/authiscool-server.git"
+  },
+  "keywords": [
+    "auth",
+    "authn",
+    "authz",
+    "authentication",
+    "login",
+    "password",
+    "passwords",
+    "username",
+    "passkeys",
+    "fido",
+    "yubikey",
+    "hash",
+    "salt",
+    "passwordless"
+  ],
+  "author": "Andrew Harasymiw",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/aharasymiw/authiscool-server/issues"
+  },
+  "homepage": "https://github.com/aharasymiw/authiscool-server#readme",
+  "dependencies": {
+    "@simplewebauthn/server": "^10.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "@simplewebauthn/types": "^10.0.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.2",
+    "@types/pg": "^8.11.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

@@ -1,0 +1,13 @@
+rate limiting
+client side retry logic
+password last update warning messages (bad login attempt)
+old password login attempt warning
+Content Security Policy
+
+when offline:
+comment out db_url in .env
+
+deploy:
+Change base db_url
+passkey.jsx
+

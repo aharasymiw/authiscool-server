@@ -1,0 +1,5 @@
+Contact: https://authis.cool/security/security-contact.html
+Expires: 2024-12-31T23:59:00.000Z
+Preferred-Languages: en
+Canonical: https://authis.cool/.well-known/security.txt
+Policy: https://authis.cool/security/disclosure-policy.html
