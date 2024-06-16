@@ -9,9 +9,15 @@ const passwordsRouter = require("./routes/passwords.router");
 const PORT = process.env.PORT || 5001;
 
 const corsOptions = {
-  origin: 'https://localhost:5173',//(https://your-client-app.com)
-  optionsSuccessStatus: 200,
+  origin: '',
+  optionsSuccessStatus: 200
 };
+
+if (process.env.ENV === 'dev') {
+  corsOptions.origin = 'https://localhost:5173'
+} else {
+  corsOptions.origin = 'https://authis.cool'
+}
 app.use(cors(corsOptions));
 
 app.use(express.json());
