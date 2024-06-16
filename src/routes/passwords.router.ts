@@ -1,7 +1,7 @@
 const { scrypt, randomBytes, timingSafeEqual } = require("node:crypto");
 import express, { Request, Response } from "express";
 const types = require('pg').types
-import { QueryResult, QueryResultRow, DatabaseError} from 'pg';
+import { QueryResult, QueryResultRow, DatabaseError } from 'pg';
 const router = express.Router();
 const pool = require("../modules/pool.js");
 
@@ -98,7 +98,7 @@ router.post("/login", (req: Request, res: Response) => {
               message: "Success!",
             };
 
-            res.cookie("cookie_name", "cookie_value", { domain: 'localhost', expires: new Date(Date.now() + 900000), httpOnly: true, path: '/' })
+            res.cookie("cookie_name", "cookie_value", { domain: 'localhost', expires: new Date(Date.now() + 900000), httpOnly: false, path: '/' })
 
             res.status(200).json(body);
           } else {

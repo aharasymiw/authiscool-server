@@ -7,7 +7,13 @@ const passwordsRouter = require("./routes/passwords.router");
 // const passkeysRouter = require("./routes/passkeys.router");
 
 const PORT = process.env.PORT || 5001;
-app.use(cors());
+
+const corsOptions = {
+  origin: 'https://localhost:5173',//(https://your-client-app.com)
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
