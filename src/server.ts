@@ -1,13 +1,13 @@
 require("dotenv").config();
-import express, { Express, Request, Response } from "express";
-
+import express, { Express } from "express";
+const cors = require('cors');
 const app: Express = express();
 
 const passwordsRouter = require("./routes/passwords.router");
 // const passkeysRouter = require("./routes/passkeys.router");
 
 const PORT = process.env.PORT || 5001;
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,4 +46,4 @@ if (process.env.ENV !== 'dev') {
   });
 }
 
-export {};
+export { };
