@@ -98,7 +98,7 @@ router.post("/login", (req: Request, res: Response) => {
               message: "Success!",
             };
 
-            res.cookie("cookie_name", "cookie_value", { domain: 'localhost', expires: new Date(Date.now() + 900000), httpOnly: false, path: '/' })
+            res.cookie("cookie_name", "cookie_value", { domain: 'localhost', expires: new Date(Date.now() + 900000), httpOnly: true, path: '/' })
 
             res.status(200).json(body);
           } else {
