@@ -3,21 +3,21 @@ import express, { Express } from "express";
 const cors = require('cors');
 const app: Express = express();
 
+const PORT = process.env.PORT || 5001;
+const ENV = process.env.ENV;
+
+// CORS origin can be an array, but environment varibles can't.
+process.env.ORIGINS = ENV === 'dev' ? JSON.stringify(['https://localhost:5173']) : JSON.stringify(['https://authis.cool', 'https://authiscool.com', 'https://authiscool.org', 'https://authiscool.net', 'https://authiscool.dev']);
+
 const passwordsRouter = require("./routes/passwords.router");
 // const passkeysRouter = require("./routes/passkeys.router");
 
-const PORT = process.env.PORT || 5001;
-
 const corsOptions = {
-  origin: '',
+  origin: JSON.parse(process.env.ORIGINS),
   optionsSuccessStatus: 200
 };
 
-if (process.env.ENV === 'dev') {
-  corsOptions.origin = 'https://localhost:5173'
-} else {
-  corsOptions.origin = 'https://authis.cool'
-}
+app.options('*', cors(corsOptions)) // enable pre-flight across-the-board, include before other routes
 app.use(cors(corsOptions));
 
 app.use(express.json());
@@ -40,9 +40,9 @@ app.use(
 app.use("/api/v1/passwords", passwordsRouter);
 // app.use("/api/v1/passkeys", passkeysRouter);
 
-if (process.env.ENV !== 'dev') {
+if (ENV !== 'dev') {
   app.listen(PORT, () => {
-    console.log(`HTTP Server is listening on port ${PORT}`);
+    console.log(`HTTP Production Server is listening on port ${PORT}`);
   });
 } else {
   const fs = require('fs');
@@ -54,8 +54,6 @@ if (process.env.ENV !== 'dev') {
   const server = https.createServer({ key: key, cert: cert }, app);
 
   server.listen(PORT, () => {
-    console.log(`HTTPS Server is listening on port ${PORT}`);
+    console.log(`HTTPS Development Server is listening on port ${PORT}`);
   });
 }
-
-export { };

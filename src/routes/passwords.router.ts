@@ -1,9 +1,10 @@
 const { scrypt, randomBytes, timingSafeEqual } = require("node:crypto");
 import express, { Request, Response } from "express";
-const types = require('pg').types
 import { QueryResult, QueryResultRow, DatabaseError } from 'pg';
 const router = express.Router();
 const pool = require("../modules/pool.js");
+
+const DOMAIN = 'https://localhost:5173';
 
 const COST = 16384;
 const BLOCK_SIZE = 8;
@@ -42,7 +43,7 @@ router.post("/register", (req: Request, res: Response) => {
     pool
       .query(query, queryValues)
       .then((dbRes: QueryResult) => {
-        res.cookie("cookie_name", "cookie_value", { domain: 'localhost', expires: new Date(Date.now() + 900000), httpOnly: true, path: '/' })
+        res.cookie("cookie_name", "cookie_value", { domain: DOMAIN, expires: new Date(Date.now() + 900000), httpOnly: false, path: '/' })
         res.status(201).json({ message: `Registration Successful!`, id: dbRes.rows[0].id });
       })
       .catch((dbErr: DatabaseError) => {
@@ -98,9 +99,12 @@ router.post("/login", (req: Request, res: Response) => {
               message: "Success!",
             };
 
-            res.cookie("cookie_name", "cookie_value", { domain: 'localhost', expires: new Date(Date.now() + 900000), httpOnly: true, path: '/' })
+            res.append('Access-Control-Allow-Credentials', 'true');
 
-            res.status(200).json(body);
+            res.cookie('cookieName', 'cookieValue', { domain: DOMAIN, httpOnly: false, signed: false, expires: new Date(Date.now() + 900000), secure: false, sameSite: 'none'});
+            // res.cookie("cookie_name", "cookie_value", { domain: process.env.ORIGIN, expires: new Date(Date.now() + 900000), httpOnly: false, path: '/' })
+
+            res.send('test');
           } else {
             console.log("passwords dont match");
             let body = {
@@ -114,7 +118,7 @@ router.post("/login", (req: Request, res: Response) => {
         let body = {
           message: "That combination of email and password does not exist",
         };
-        res.status(403).json(body);
+        res.sendStatus(403).json(body);
       }
     })
     .catch((dbErr: DatabaseError) => {
